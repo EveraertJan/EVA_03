@@ -49,7 +49,7 @@ void ofApp::reset() {
 void ofApp::update(){
     EyeTracker.update();
     ofLog() << "update" << endl;
-//    Feed.update(feed_offset);
+    Feed.update(feed_offset);
     
     ofLog() << "feed updated" << endl;
     // scroll
@@ -69,9 +69,10 @@ void ofApp::update(){
     ofVec2f lookPoint = EyeTracker.getLookPoint();
     int millis_frame = round(ofGetFrameRate() / 10);
     ofLog() << "get millis" << endl;
+    // somewhere here±!!
     if(ofGetFrameNum() % millis_frame == 0) {
-        post * lookedAt = Feed.getPostOnPoint(lookPoint);
-        lookedAt->focus_time += 1;
+//        post * lookedAt = Feed.getPostOnPoint(lookPoint);
+//        lookedAt->focus_time += 1;
     }
     ofLog() << "get focus time" << endl;
     

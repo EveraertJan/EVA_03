@@ -63,4 +63,7 @@ class ofApp : public ofBaseApp{
     
     
     ofxSvg logo;
+    
+    
+    
 };

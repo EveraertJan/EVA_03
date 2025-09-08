@@ -8,7 +8,7 @@
 #include "eyeTracker.hpp"
 #include <curl/curl.h>
 #include <string>
-
+#include "stateManager.hpp"
 
 ofVec4f QuaternionToAxisAngle(const glm::quat& q){
     glm::quat nq = glm::normalize(q);
@@ -132,6 +132,8 @@ void eyeTracker::update(){
             }
             
         }
+        StateManager::getInstance().setNumFaces( faceTracker->getFaces().size()  );
+
     }
     if(calibrating) {
         calibFrame++;

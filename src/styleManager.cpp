@@ -16,7 +16,7 @@ StyleManager& StyleManager::getInstance() {
 void StyleManager::setup() {
     ofTrueTypeFont::setGlobalDpi(72);
     
-    
+    ofLog() << "setting up stylemanager" << endl;
     base_font.load("font/mono2.ttf", 16);
     base_font.setLetterSpacing(1.05);
     mid_font.load("font/mono2.ttf", 20);

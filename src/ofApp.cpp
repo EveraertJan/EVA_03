@@ -20,11 +20,11 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
-
-#if __linux__
-    StateManager::getInstance().debug = false;
-#endif
-    
+//
+//#if __linux__
+//    StateManager::getInstance().debug = false;
+//#endif
+//    
     logo.load("icons/tiger.svg");
 
     reset();

@@ -64,13 +64,15 @@ void ofApp::update(){
         scroll_speed = -20;
     }
     
-    
+    ofLog() << "get look" << endl;
     ofVec2f lookPoint = EyeTracker.getLookPoint();
     int millis_frame = round(ofGetFrameRate() / 10);
+    ofLog() << "get millis" << endl;
     if(ofGetFrameNum() % millis_frame == 0) {
         post * lookedAt = Feed.getPostOnPoint(lookPoint);
         lookedAt->focus_time += 1;
     }
+    ofLog() << "get focus time" << endl;
     
     
     StateManager::getInstance().state_running++;

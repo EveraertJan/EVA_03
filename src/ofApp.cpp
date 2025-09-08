@@ -68,12 +68,13 @@ void ofApp::update(){
 
 
     // somewhere here±!!
-//    if(ofGetFrameNum() % millis_frame == 0) {
+    if(ofGetFrameNum() % millis_frame == 0) {
+        ofLog() << "FRAME";
 //        post * lookedAt = Feed.getPostOnPoint(lookPoint);
 //        if(lookedAt->focus_time) {
 //            lookedAt->focus_time += 1;
 //        }
-//    }
+    }
     
     
     StateManager::getInstance().state_running++;
@@ -112,7 +113,6 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofLog() << "draw" << endl;
     ofBackground(255);
     
     for(int i = 0; i < ofGetWidth(); i+= 100) {

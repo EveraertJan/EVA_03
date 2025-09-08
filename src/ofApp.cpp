@@ -33,6 +33,7 @@ void ofApp::setup(){
 }
 
 void ofApp::reset() {
+    ofLog() << "reset" << endl;
     StateManager::getInstance().reset();
     Feed.reset();
     EnforceFeed.reset();
@@ -47,6 +48,7 @@ void ofApp::reset() {
 //--------------------------------------------------------------
 void ofApp::update(){
     EyeTracker.update();
+    ofLog() << "update" << endl;
     Feed.update(feed_offset);
     
     // scroll
@@ -102,6 +104,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofLog() << "draw" << endl;
     ofBackground(255);
     
     for(int i = 0; i < ofGetWidth(); i+= 100) {

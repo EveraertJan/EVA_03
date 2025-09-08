@@ -1,0 +1,9 @@
+ofxOpenCv
+ofxCv
+ofxGui
+ofxLearn
+ofxMediaPipePython
+ofxOsc
+ofxPoco
+ofxSvg
+ofxXmlSettings

@@ -69,10 +69,10 @@ void ofApp::update(){
     // somewhere here±!!
     if(ofGetFrameNum() % 20 == 0) {
         ofLog() << "FRAME";
-//        post * lookedAt = Feed.getPostOnPoint(lookPoint);
-//        if(lookedAt->focus_time) {
-//            lookedAt->focus_time += 1;
-//        }
+        post * lookedAt = Feed.getPostOnPoint(lookPoint);
+        if(lookedAt->focus_time) {
+            lookedAt->focus_time += 1;
+        }
     }
     
     

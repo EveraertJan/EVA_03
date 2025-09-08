@@ -49,7 +49,7 @@ void ofApp::reset() {
 void ofApp::update(){
     EyeTracker.update();
     ofLog() << "update" << endl;
-    Feed.update(feed_offset);
+//    Feed.update(feed_offset);
     
     ofLog() << "feed updated" << endl;
     // scroll

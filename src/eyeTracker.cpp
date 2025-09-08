@@ -66,13 +66,10 @@ void eyeTracker::setup(){
     fsettings.outputFaceBlendshapes = true;
     
     faceTracker->setup(fsettings);
-//    
-    try {
-        classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
-        trainingDone = true;
-        
-    } catch(ExceptionInfo e) {
-    }
+//
+    classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
+    trainingDone = true;
+  
     
     loadTrainingData();
     

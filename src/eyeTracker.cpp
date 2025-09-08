@@ -67,8 +67,8 @@ void eyeTracker::setup(){
     
     faceTracker->setup(fsettings);
 //
-    classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
-    trainingDone = true;
+//    classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
+//    trainingDone = true;
   
     
     loadTrainingData();

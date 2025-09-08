@@ -69,8 +69,8 @@ void ofApp::update(){
 
     // somewhere here±!!
     if(ofGetFrameNum() % millis_frame == 0) {
-//        post * lookedAt = Feed.getPostOnPoint(lookPoint);
-//        lookedAt->focus_time += 1;
+        post * lookedAt = Feed.getPostOnPoint(lookPoint);
+        lookedAt->focus_time += 1;
     }
     
     
@@ -99,6 +99,11 @@ void ofApp::update(){
             }
             
         }
+    }
+    
+    if(StateManager::getInstance().resetNecessary) {
+        StateManager::getInstance().resetNecessary = false;
+        reset();
     }
 }
 

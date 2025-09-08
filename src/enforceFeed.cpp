@@ -52,7 +52,16 @@ void enforceFeed::reset() {
 
 void enforceFeed::update(int feed_offset) {
       
-    int cutoff =  -(posts.size() * ((ofGetWidth() / 100)*50) )/2;
+    int cutoff =  -(posts.size() * ((ofGetWidth() / 100)*40) )/2;
+    
+    int max = 0;
+    for(int i = 0; i<posts.size(); i++) {
+        if(abs(posts.at(i).currentRect.getBottom()) > max) {
+            max = abs(posts.at(i).currentRect.getBottom());
+        }
+    }
+    
+    cutoff = -(max - 200);
     if(feed_offset <  cutoff) {
         amount_of_refreshes += 1;
         // get ratios

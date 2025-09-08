@@ -61,6 +61,7 @@ void feed::reset() {
 void feed::update(int feed_offset) {
       
     int cutoff =  -(posts.size() * ((ofGetWidth() / 100)*50) )/2;
+    
     if(feed_offset <  cutoff) {
         amount_of_refreshes += 1;
         // get ratios

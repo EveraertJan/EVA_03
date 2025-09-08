@@ -170,12 +170,12 @@ post * feed::getPostOnPoint(ofVec2f lookPoint){
     
     for(int i = 0; i < posts.size(); i++) {
         ofRectangle r = posts.at(i).currentRect;
-        if(lookPoint.x > r.getLeft() && lookPoint.x < r.x + r.getRight() &&
+        if(lookPoint.x > r.getLeft() && lookPoint.x < r.getRight() &&
            lookPoint.y > r.getTop() && lookPoint.y < r.getBottom()) {
             return &posts.at(i);
         }
     }
-    return &posts.at(0);
+    return posts.empty() ? nullptr : &posts[0];
 }
 
 

@@ -51,6 +51,7 @@ void ofApp::update(){
     ofLog() << "update" << endl;
     Feed.update(feed_offset);
     
+    ofLog() << "feed updated" << endl;
     // scroll
     if(touch_down == -1 && abs(scroll_speed) != 0) {
         feed_offset += scroll_speed;

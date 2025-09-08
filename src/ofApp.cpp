@@ -69,7 +69,7 @@ void ofApp::update(){
 
     // somewhere here±!!
     if(ofGetFrameNum() % millis_frame == 0) {
-        post * lookedAt = Feed.getPostOnPoint(lookPoint);
+//        post * lookedAt = Feed.getPostOnPoint(lookPoint);
 //        if(lookedAt->focus_time) {
 //            lookedAt->focus_time += 1;
 //        }

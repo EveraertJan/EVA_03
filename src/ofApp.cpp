@@ -20,11 +20,11 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
-//
-//#if __linux__
-//    StateManager::getInstance().debug = false;
-//#endif
-//    
+
+#if __linux__
+    StateManager::getInstance().debug = false;
+#endif
+    
     logo.load("icons/tiger.svg");
 
     reset();
@@ -53,6 +53,11 @@ void ofApp::update(){
     Feed.update(feed_offset);
     
     // scroll
+    float decr = 0.92;
+#if __linux__
+    decr = 0.9l;
+#endif
+    
     if(touch_down == -1 && abs(scroll_speed) != 0) {
         feed_offset += scroll_speed;
         scroll_speed = floor( scroll_speed * 0.92 );

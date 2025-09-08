@@ -64,11 +64,10 @@ void ofApp::update(){
     }
     
     ofVec2f lookPoint = EyeTracker.getLookPoint();
-    int millis_frame = round(ofGetFrameRate() / 10);
 
 
     // somewhere here±!!
-    if(ofGetFrameNum() % millis_frame == 0) {
+    if(ofGetFrameNum() % 20 == 0) {
         ofLog() << "FRAME";
 //        post * lookedAt = Feed.getPostOnPoint(lookPoint);
 //        if(lookedAt->focus_time) {

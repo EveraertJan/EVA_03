@@ -5,9 +5,9 @@
 #include "styleManager.hpp"
 //--------------------------------------------------------------
 void ofApp::setup(){
-    eyeTracker.setup();
-    feed.setup();
-    enforce_feed.stack = &feed.stack;
+    EyeTracker.setup();
+    Feed.setup();
+    EnforceFeed.stack = &Feed.stack;
     touch_down = -1;
     
     
@@ -34,8 +34,8 @@ void ofApp::setup(){
 
 void ofApp::reset() {
     StateManager::getInstance().reset();
-    feed.reset();
-    enforce_feed.reset();
+    Feed.reset();
+    EnforceFeed.reset();
     
     consent_transaction.accepted = -1;
     consent_transaction.accepted_touched = 0;
@@ -46,8 +46,8 @@ void ofApp::reset() {
 }
 //--------------------------------------------------------------
 void ofApp::update(){
-    eyeTracker.update();
-    feed.update(feed_offset);
+    EyeTracker.update();
+    Feed.update(feed_offset);
     
     // scroll
     if(touch_down == -1 && abs(scroll_speed) != 0) {
@@ -63,10 +63,10 @@ void ofApp::update(){
     }
     
     
-    ofVec2f lookPoint = eyeTracker.getLookPoint();
+    ofVec2f lookPoint = EyeTracker.getLookPoint();
     int millis_frame = round(ofGetFrameRate() / 10);
     if(ofGetFrameNum() % millis_frame == 0) {
-        post * lookedAt = feed.getPostOnPoint(lookPoint);
+        post * lookedAt = Feed.getPostOnPoint(lookPoint);
         lookedAt->focus_time += 1;
     }
     
@@ -74,7 +74,7 @@ void ofApp::update(){
     StateManager::getInstance().state_running++;
     
     if( StateManager::getInstance().getState() == 20){
-        if(feed.amount_of_refreshes >= 1 || feed.time_running > ofGetFrameRate() * 30) {
+        if(Feed.amount_of_refreshes >= 1 || Feed.time_running > ofGetFrameRate() * 30) {
             float c = 0;
             for(int i = 0; i < StateManager::getInstance().topics.size(); i++) {
                 
@@ -91,7 +91,7 @@ void ofApp::update(){
             
             if(deduced != -1) {
                 StateManager::getInstance().setState(30);
-                enforce_feed.setup();
+                EnforceFeed.setup();
                 feed_offset = 0;
             }
             
@@ -174,10 +174,10 @@ void ofApp::draw(){
         
         ofPushMatrix();
         ofSetColor(255);
-        feed.draw(feed_offset + temp_offset);
+        Feed.draw(feed_offset + temp_offset);
         ofPopMatrix();
     
-        ofVec2f lookPoint = eyeTracker.getLookPoint();
+        ofVec2f lookPoint = EyeTracker.getLookPoint();
         if(DEBUG) {
             ofSetColor(255, 0, 255);
             ofDrawCircle(lookPoint.x, lookPoint.y, 10);
@@ -216,10 +216,10 @@ void ofApp::draw(){
         
         ofPushMatrix();
         ofSetColor(255);
-        enforce_feed.draw(feed_offset + temp_offset);
+        EnforceFeed.draw(feed_offset + temp_offset);
         ofPopMatrix();
     
-        ofVec2f lookPoint = eyeTracker.getLookPoint();
+        ofVec2f lookPoint = EyeTracker.getLookPoint();
         if(DEBUG) {
             ofSetColor(255, 0, 255);
             ofDrawCircle(lookPoint.x, lookPoint.y, 10);
@@ -301,21 +301,21 @@ void ofApp::draw(){
         
         
     }
-    eyeTracker.draw();
+    EyeTracker.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    eyeTracker.faceTracker.reset();
+    EyeTracker.faceTracker.reset();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if(key == 't') {
-        eyeTracker.calibrate();
+        EyeTracker.calibrate();
     }
     if(key == 'l') {
-        eyeTracker.build();
+        EyeTracker.build();
     }
     
     ofColor toSend;
@@ -324,7 +324,7 @@ void ofApp::keyPressed(int key){
     if(key == '2' ) { StateManager::getInstance().setState(20); toSend.setHex(0xFFFF00); OSCManager::getInstance().sendColor(toSend);  }
     if(key == '3' ) { StateManager::getInstance().setState(30); toSend.setHex(0x00FF00); OSCManager::getInstance().sendColor(toSend);  }
     if(key == '4' ) { 
-        enforce_feed.setup();
+        EnforceFeed.setup();
         feed_offset = 0;
         StateManager::getInstance().setDeduced(2);
         StateManager::getInstance().setState(40);
@@ -364,10 +364,10 @@ void ofApp::mousePressed(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     if(ABS(touch_down - y) < 100) {
-        post * lookedAt = feed.getPostOnPoint(ofVec2f(x, y));
+        post * lookedAt = Feed.getPostOnPoint(ofVec2f(x, y));
         lookedAt->clicked = true;
         scroll_speed = 0;
-        eyeTracker.record(x, y);
+        EyeTracker.record(x, y);
         
     } else {
         feed_offset += temp_offset;
@@ -425,10 +425,10 @@ void ofApp::touchUp(int x, int y, int id) {
     if(ABS(touch_down - y) < 100) {
         std::cout << "click" << endl;
         
-        post * lookedAt = feed.getPostOnPoint(ofVec2f(x, y));
+        post * lookedAt = Feed.getPostOnPoint(ofVec2f(x, y));
         lookedAt->clicked = true;
         
-        eyeTracker.record(x, y);
+        EyeTracker.record(x, y);
     } else {
         std::cout << "continue scroll" << endl;
         feed_offset += temp_offset;

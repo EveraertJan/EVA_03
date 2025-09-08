@@ -36,9 +36,9 @@ class ofApp : public ofBaseApp{
     void touchMoved(int x, int y, int id) override;
     void touchUp(int x, int y, int id) override;
     
-    eyeTracker eyeTracker;
-    feed feed;
-    enforceFeed enforce_feed;
+    eyeTracker EyeTracker;
+    feed Feed;
+    enforceFeed EnforceFeed;
     
     bool DEBUG = true;
     

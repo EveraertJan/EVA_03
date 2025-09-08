@@ -60,7 +60,7 @@ void ofApp::update(){
     
     if(touch_down == -1 && abs(scroll_speed) != 0) {
         feed_offset += scroll_speed;
-        scroll_speed = floor( scroll_speed * 0.92 );
+        scroll_speed = floor( scroll_speed * decr );
         if(scroll_speed == last_scroll_speed) {
             scroll_speed = floor(scroll_speed / 2);
         }

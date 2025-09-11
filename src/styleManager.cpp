@@ -25,6 +25,8 @@ void StyleManager::setup() {
     bold_font.load("font/inputmono.ttf", 24);
     debug_font.load("font/inputmono.ttf", 12);
     state_font.load("font/dots.ttf", 24);
+    
+    empathyFont.load("font/Input_Desktop/InputMono-Medium-Edu.ttf", 124);
 }
 
 void StyleManager::drawStringHighlight(std::string content, int x, int y, ofTrueTypeFont & f, bool centered){

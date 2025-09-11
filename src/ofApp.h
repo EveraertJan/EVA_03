@@ -5,6 +5,7 @@
 #include "feed.hpp"
 #include "enforceFeed.hpp"
 #include "ofxSvg.h"
+#include "comments.h"
 #include "dialog.hpp"
 
 class ofApp : public ofBaseApp{
@@ -39,6 +40,7 @@ class ofApp : public ofBaseApp{
     eyeTracker EyeTracker;
     feed Feed;
     enforceFeed EnforceFeed;
+    comments Comments;
     
     bool DEBUG = true;
     
@@ -63,6 +65,8 @@ class ofApp : public ofBaseApp{
     
     
     ofxSvg logo;
+    
+    int lastUp = 0;
     
     
     

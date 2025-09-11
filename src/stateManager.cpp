@@ -28,6 +28,9 @@ void StateManager::reset() {
     setDeduced(-1);
     click_through = 0;
     
+    reason = "";
+    looking_away = 0;
+    
     for(int i = 0; i < topics.size(); i++ ) {
         topics.at(i).focus_time = 0;
         topics.at(i).totalweight = 0;
@@ -143,3 +146,5 @@ void StateManager::reset_topic_focus() {
         topics[i].focus_time = 0;
     }
 }
+
+

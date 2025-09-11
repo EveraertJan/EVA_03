@@ -29,6 +29,7 @@ class StyleManager {
         ofTrueTypeFont bold_font;
         ofTrueTypeFont state_font;
         ofTrueTypeFont mid_font;
+        ofTrueTypeFont empathyFont;
         
     private:
         StyleManager() = default;

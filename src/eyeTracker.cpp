@@ -138,6 +138,16 @@ void eyeTracker::update(){
                 
             }
             
+            if(abs(orient.z) > 0.25) {
+                
+                ofDrawBitmapStringHighlight("LOOKING AWAY", ofGetWidth()/2 -50, ofGetHeight()/2);
+                StateManager::getInstance().looking_away++;
+            } else {
+                StateManager::getInstance().looking_away-=2;
+                if(StateManager::getInstance().looking_away < 0) {
+                    StateManager::getInstance().looking_away = 0;
+                }
+            }
         }
         StateManager::getInstance().setNumFaces( faceTracker->getFaces().size()  );
 
@@ -145,6 +155,7 @@ void eyeTracker::update(){
     if(calibrating) {
         calibFrame++;
     }
+    
 }
 void eyeTracker::draw(){
     glm::quat orient;
@@ -169,7 +180,12 @@ void eyeTracker::draw(){
         vector<std::shared_ptr<ofx::MediaPipe::Face>> faces = faceTracker->getFaces();
         if(faceTracker->getFaces().size() > 0) {
             face = faces[0];
-            
+            glm::quat orient = face->getOrientation();
+
+            if(abs(orient.z) > 0.25) {
+                
+                ofDrawBitmapStringHighlight("LOOKING AWAY", ofGetWidth()/2 -50, ofGetHeight()/2);
+            }
             
             
             if(calibrating) {
@@ -184,7 +200,6 @@ void eyeTracker::draw(){
                     ofVec3f hpos = face->getPosition();
                     
                     
-                    glm::quat orient = face->getOrientation();
                     ofVec4f ori = QuaternionToAxisAngle(face->getOrientation());
 
                     CalibrationPoint c;

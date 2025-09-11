@@ -1,7 +1,6 @@
 #include "ofApp.h"
 #include "stateManager.hpp"
 #include "OSCManager.h"
-//#include "statisticsManager.hpp"
 #include "styleManager.hpp"
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -14,7 +13,7 @@ void ofApp::setup(){
     StateManager::getInstance().setup();
     OSCManager::getInstance().setup();
     StyleManager::getInstance().setup();
-    
+    Comments.setup();
     
     ofDisableArbTex();
     ofSetVerticalSync(true);
@@ -37,6 +36,7 @@ void ofApp::reset() {
     StateManager::getInstance().reset();
     Feed.reset();
     EnforceFeed.reset();
+    Comments.reset();
     
     consent_transaction.accepted = -1;
     consent_transaction.accepted_touched = 0;
@@ -44,6 +44,8 @@ void ofApp::reset() {
     consent_content.accepted_touched = 0;
     ack_complete.accepted = -1;
     ack_complete.accepted_touched = 0;
+    
+    
 }
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -85,7 +87,7 @@ void ofApp::update(){
     StateManager::getInstance().state_running++;
     
     if( StateManager::getInstance().getState() == 20){
-        if(Feed.amount_of_refreshes >= 1 || Feed.time_running > ofGetFrameRate() * 30) {
+        if(Feed.amount_of_refreshes >= 2 || Feed.time_running > ofGetFrameRate() * 30) {
             float c = 0;
             for(int i = 0; i < StateManager::getInstance().topics.size(); i++) {
                 
@@ -112,6 +114,10 @@ void ofApp::update(){
     if(StateManager::getInstance().resetNecessary) {
         StateManager::getInstance().resetNecessary = false;
         reset();
+    }
+    
+    if(StateManager::getInstance().getState() == 40) {
+        Comments.update();
     }
 }
 
@@ -216,6 +222,7 @@ void ofApp::draw(){
         if(StateManager::getInstance().state_running > 60) {
             if(ack_topic_found.accepted == 1) {
                 StateManager::getInstance().setState(40);
+                StateManager::getInstance().looking_away = 0;
             }
             if(ack_topic_found.accepted == 0) {
                 reset();
@@ -233,6 +240,7 @@ void ofApp::draw(){
         ofPushMatrix();
         ofSetColor(255);
         EnforceFeed.draw(feed_offset + temp_offset);
+        Comments.draw(feed_offset + temp_offset);
         ofPopMatrix();
     
         ofVec2f lookPoint = EyeTracker.getLookPoint();
@@ -243,32 +251,47 @@ void ofApp::draw(){
         }
         
         
+        int x = 0;
+        int y = 0;
+        ofPushStyle();
+        ofPushMatrix();
+        ofTranslate(ofGetWidth() - 180, 100);
+
+        ofRotateDeg(90);
+
+        ofRectangle e_frame = StyleManager::getInstance().empathyFont.getStringBoundingBox("EMPATHY MEASURE", x, y);
         
-//        analytics_block.drawEmpathyBold();
-//        
-//        ofDrawBitmapStringHighlight(ofToString(StatisticsManager::getInstance().looking_away), ofVec2f(ofGetWidth()-40, ofGetHeight()-50));
-//        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().click_through), ofVec2f(ofGetWidth()-40, ofGetHeight()-70));
-//        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().getEmpathy()), ofVec2f(ofGetWidth()-40, ofGetHeight()-90));
-//        
-//        
-//        if( StatisticsManager::getInstance().looking_away > 200) {
-//            StatisticsManager::getInstance().reason = "No longer looking at the display";
-//            StateManager::getInstance().setEmpathy(-0.003);
-//        }
-//        if(StateManager::getInstance().click_through >= 10) {
-//            StatisticsManager::getInstance().reason = "boredom, rapid scrolling";
-//            ofLog() << "rapid scrolling";
-//            StateManager::getInstance().setEmpathy(-1);
-//            StateManager::getInstance().setState(50);
-//            
-//        }
-//        if( StateManager::getInstance().getEmpathy() < 0.2) {
-//            if(StatisticsManager::getInstance().looking_away< 200) {
-//                StatisticsManager::getInstance().reason = "Distraction, ignoring subject";
-//            }
-//            ofLog() << "look elsewhere";
-//            StateManager::getInstance().setState(50);
-//        }
+        ofFill();
+        ofSetColor(StyleManager::getInstance().green);
+        ofDrawRectangle(e_frame.x, e_frame.y, e_frame.getWidth() * ofMap(StateManager::getInstance().getEmpathy(), 0.2, 1, 0, 1), e_frame.getHeight());
+        ofSetColor(0, 0, 0);
+        StyleManager::getInstance().empathyFont.drawString("EMPATHY MEASURE", x, y);
+        ofPopStyle();
+        ofPopMatrix();
+        
+        ofDrawBitmapStringHighlight("Empathy: " + ofToString(StateManager::getInstance().getEmpathy()), ofVec2f(ofGetWidth()-140, ofGetHeight()-90));
+        ofDrawBitmapStringHighlight("doomscroll: " +ofToString(StateManager::getInstance().click_through), ofVec2f(ofGetWidth()-140, ofGetHeight()-70));
+        ofDrawBitmapStringHighlight("distraction: " +ofToString(StateManager::getInstance().looking_away), ofVec2f(ofGetWidth()-140, ofGetHeight()-50));
+  
+        
+        if( StateManager::getInstance().looking_away > 200) {
+            StateManager::getInstance().reason = "No longer looking at the display";
+            StateManager::getInstance().setEmpathy(-0.003);
+        }
+        if(StateManager::getInstance().click_through >= 10) {
+            StateManager::getInstance().reason = "boredom, rapid scrolling";
+            ofLog() << "rapid scrolling";
+            StateManager::getInstance().setEmpathy(-1);
+            StateManager::getInstance().setState(50);
+            
+        }
+        if( StateManager::getInstance().getEmpathy() < 0.2) {
+            if(StateManager::getInstance().looking_away< 200) {
+                StateManager::getInstance().reason = "Distraction, ignoring subject";
+            }
+            ofLog() << "look elsewhere";
+            StateManager::getInstance().setState(50);
+        }
     }
     if(state == 50) {
         
@@ -277,7 +300,7 @@ void ofApp::draw(){
             
             stringstream ss;
             ss << std::endl << "The system detected signs of lowered empathy, in the form of:" << " // // ";
-//            ss << std::endl << StatisticsManager::getInstance().reason << " // // ";
+            ss << std::endl << StateManager::getInstance().reason << " // // ";
             ss << std::endl << "You have received 10 cents in exchange for a fraction of your empathy. This transaction is final. Your behavioral data is now displayed. Please take a moment to review and reflect."  << " //";
 
             ack_complete.draw("SESSION", "COMPLETE", ss.str(), "Restart", "", false);
@@ -290,32 +313,6 @@ void ofApp::draw(){
                 toSend.setHex(0x00FF10); OSCManager::getInstance().sendColor(toSend);
             }
         }
-        
-        
-        ofPushMatrix();
-//        std::vector<double> history = StatisticsManager::getInstance().empathy_history;
-        ofPushStyle();
-        ofSetColor(255);
-        ofPath p;
-        p.setFilled(false);
-        p.setStrokeColor(ofColor(255));
-        p.setColor(ofColor(255));
-        p.moveTo(0, 0);
-//        for(int i = 0; i < history.size(); i++) {
-//            double x = ofMap(i, 0, history.size(), 0, 420);
-//            double y = ofMap(history[i], 0, 1, 620, 0);
-//            p.lineTo(x, y);
-//        }
-        p.setStrokeWidth(4.);
-        ofTranslate(ofGetWidth() / 2 + 100, ofGetHeight()/2 - 260);
-        p.draw();
-        StyleManager::getInstance().mid_font.drawString("Empathy measurement", 20, -20);
-        ofPopStyle();
-        ofPopMatrix();
-        
-        
-        
-        
     }
     EyeTracker.draw();
 }
@@ -391,6 +388,12 @@ void ofApp::mouseReleased(int x, int y, int button){
     
     temp_offset = 0;
     touch_down = -1;
+    
+    int tDiff = ofGetUnixTimeMillis() - lastUp;
+    if( tDiff < 500) {
+        StateManager::getInstance().click_through +=1;
+    }
+    lastUp = ofGetUnixTimeMillis();
 }
 
 //--------------------------------------------------------------
@@ -452,6 +455,14 @@ void ofApp::touchUp(int x, int y, int id) {
     
     temp_offset = 0;
     touch_down = -1;
+    
+    
+    int tDiff = ofGetUnixTimeMillis() - lastUp;
+    if( tDiff < 500) {
+        StateManager::getInstance().click_through +=1;
+    }
+    lastUp = ofGetUnixTimeMillis();
+    
 }
 
 void ofApp::drawState(string state_message) {

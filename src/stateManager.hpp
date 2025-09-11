@@ -56,6 +56,9 @@ class StateManager {
         string topic_picked;
         vector<float> empathy_history;
     
+    std::string reason;
+    int looking_away = 0;
+    
     private:
         StateManager() = default;
         StateManager(const StateManager&) = delete;

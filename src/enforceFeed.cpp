@@ -56,68 +56,15 @@ void enforceFeed::update(int feed_offset) {
     
     if(feed_offset <  cutoff) {
         amount_of_refreshes += 1;
-        // get ratios
-        std::vector<float> ratios(stack->size(), 0);
-        std::cout << ratios.size() << endl;
-        for(int i = 0; i < posts.size(); i++) {
-            if(posts.at(i).stack_num != 5) {
-                ratios.at(posts.at(i).stack_num) += posts.at(i).focus_time;
-                if(posts.at(i).clicked) {
-                    ratios.at(posts.at(i).stack_num) += 20; // what is a like worth?
-                }
-            }
-        }
-        float total = std::accumulate(ratios.begin(), ratios.end(), 0.0);
-        std::cout << total << " total time watched" << endl;
-        
-        for(auto& t : StateManager::getInstance().topics) {
-            if(t.handle == "war") { t.focus_time = ratios.at(0); }
-            if(t.handle == "pollution") { t.focus_time = ratios.at(1); }
-            if(t.handle == "migration") { t.focus_time = ratios.at(2); }
-            if(t.handle == "climate") { t.focus_time = ratios.at(3); }
-            if(t.handle == "societal divide") { t.focus_time = ratios.at(4); }
-        }
-        
-        
-        for (int i = 0; i< ratios.size(); i++) {
-            ratios.at(i) /= total;
-            std::cout << i << ": " << ratios.at(i) << endl;
-        }
-        
-        for(auto& t : StateManager::getInstance().topics) {
-            if(t.handle == "war") { t.totalweight = ratios.at(0); }
-            if(t.handle == "pollution") { t.totalweight = ratios.at(1); }
-            if(t.handle == "migration") { t.totalweight = ratios.at(2); }
-            if(t.handle == "climate") { t.totalweight = ratios.at(3); }
-            if(t.handle == "societal divide") { t.totalweight = ratios.at(4); }
-        }
-        
-        int cutoff_w = 40 * ratios.at(0);
-        int cutoff_p = cutoff_w + (40 * ratios.at(1));
-        int cutoff_m = cutoff_p + (40 * ratios.at(2));
-        int cutoff_c = cutoff_m + (40 * ratios.at(3));
-        
-        
-        for(auto& t : StateManager::getInstance().topics) {
-            std::cout << t.name << ", " << t.handle << ": " << t.focus_time << " / " << t.totalweight<< endl;
-        }
-        
         // add posts according to ratios
-        int cur_stack = 0;
         std::vector<post> t_posts;
+        int cur_stack = StateManager::getInstance().getDeduced();
         for(int i = 0; i < 40; i++) {
-            
-            if(i < cutoff_w) { cur_stack = 0; } // war
-            if(i < cutoff_p) { cur_stack = 1; } // polution
-            if(i < cutoff_m) { cur_stack = 2; } // migr
-            if(i < cutoff_c) { cur_stack = 3; } // clim
-            if(i >= cutoff_c) { cur_stack = 4; } // soci
-            
-            t_posts.push_back(
+            posts.push_back(
                 stack->at(cur_stack).at(
-                    ofRandom(stack->at(cur_stack).size()-1)
-                )
-            );
+                   ofRandom( stack->at(cur_stack).size() - 1 )
+                   )
+                );
         }
         // add none posts
         for(int i = 0; i < 8; i++) {

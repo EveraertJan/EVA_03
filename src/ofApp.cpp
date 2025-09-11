@@ -52,8 +52,6 @@ void ofApp::update(){
     
     
     EyeTracker.update();
-    Feed.update(feed_offset);
-    EnforceFeed.update(feed_offset);
     
     // scroll
     float decr = 0.92;
@@ -88,6 +86,8 @@ void ofApp::update(){
     StateManager::getInstance().state_running++;
     
     if( StateManager::getInstance().getState() == 20){
+        
+        Feed.update(feed_offset);
         if(Feed.amount_of_refreshes >= 2 || Feed.time_running > ofGetFrameRate() * 30) {
             float c = 0;
             for(int i = 0; i < StateManager::getInstance().topics.size(); i++) {
@@ -99,7 +99,7 @@ void ofApp::update(){
                 }
             }
             
-            int deduced =StateManager::getInstance().getDeduced();
+            int deduced = StateManager::getInstance().getDeduced();
             int cer =StateManager::getInstance().certainty;
             std::cout << ofToString(deduced) << " deduced with " << cer <<  endl;
             
@@ -120,6 +120,7 @@ void ofApp::update(){
     }
     
     if(StateManager::getInstance().getState() == 40) {
+        EnforceFeed.update(feed_offset);
         Comments.update();
     }
 }

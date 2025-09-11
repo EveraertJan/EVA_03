@@ -53,6 +53,7 @@ void ofApp::update(){
     
     EyeTracker.update();
     Feed.update(feed_offset);
+    EnforceFeed.update(feed_offset);
     
     // scroll
     float decr = 0.92;
@@ -110,6 +111,8 @@ void ofApp::update(){
             
         }
     }
+    
+    
     
     if(StateManager::getInstance().resetNecessary) {
         StateManager::getInstance().resetNecessary = false;

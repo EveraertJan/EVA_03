@@ -106,7 +106,7 @@ void ofApp::update(){
             
             int deduced = StateManager::getInstance().getDeduced();
             if(abs(feed_offset) > 20000 && deduced == -1 ) {
-                deduced = floor(ofRandom(StateManager::getInstance().topics.size()));
+                deduced = floor(ofRandom(StateManager::getInstance().topics.size()-1));
                 StateManager::getInstance().setDeduced(deduced);
                 StateManager::getInstance().certainty = ofRandom(30);
                 c = StateManager::getInstance().certainty / 100;

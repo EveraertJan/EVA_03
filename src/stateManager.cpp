@@ -135,7 +135,7 @@ void StateManager::setNumFaces(int num_faces) {
             ofLog() << "reset person";
             setState(10);
         }
-        if(no_person > ofGetFrameRate() * 10) {
+        if(no_person > ofGetFrameRate() * 40) {
             currentPerson = floor(ofRandom(1000000));
             ofLog() << "reset person after time";
             setState(10);

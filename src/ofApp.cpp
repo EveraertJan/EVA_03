@@ -5,6 +5,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     EyeTracker.setup();
+    
+    
     Feed.setup();
     EnforceFeed.stack = &Feed.stack;
     touch_down = -1;

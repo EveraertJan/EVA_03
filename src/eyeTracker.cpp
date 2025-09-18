@@ -73,6 +73,7 @@ void eyeTracker::setup(){
   
     
     loadTrainingData();
+    build();
     
     
 }

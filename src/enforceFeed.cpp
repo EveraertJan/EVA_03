@@ -26,7 +26,7 @@ void enforceFeed::setup() {
     
     
     
-    for(int i = 0; i < 40; i++) {
+    for(int i = 0; i < 200; i++) {
         posts.push_back(
                         stack->at(cur_stack).at(
                                                ofRandom( stack->at(cur_stack).size() - 1 )

@@ -150,7 +150,8 @@ void eyeTracker::update(){
             }
         } else {
 //        StateManager::getInstance().setNoPerson(1);
-
+            
+            StateManager::getInstance().looking_away++;
         }
         StateManager::getInstance().setNumFaces( faceTracker->getFaces().size()  );
 

@@ -258,8 +258,15 @@ void eyeTracker::build(){
     classifier.train();
     trainingDone = true;
     
-    classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
+    // /home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03
 
+#ifdef __APPLE__
+    classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
+#elif __linux__
+    ofLog() << "LINUX SETTINGS";
+    classifier.save("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
+
+#endif
 }
 
 

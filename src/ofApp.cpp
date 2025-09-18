@@ -109,6 +109,10 @@ void ofApp::update(){
             if(deduced != -1) {
                 StateManager::getInstance().setState(30);
                 EnforceFeed.setup();
+                StateManager::getInstance().setEmpathy(1);
+                StateManager::getInstance().looking_away = 0;
+                StateManager::getInstance().click_through = 0;
+                
                 feed_offset = 0;
             }
             
@@ -294,7 +298,7 @@ void ofApp::draw(){
             
         }
         if( StateManager::getInstance().getEmpathy() < 0.2) {
-            if(StateManager::getInstance().looking_away< 200) {
+            if(StateManager::getInstance().looking_away > 200) {
                 StateManager::getInstance().reason = "Distraction, ignoring subject";
             }
             ofLog() << "look elsewhere";

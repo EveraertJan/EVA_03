@@ -232,6 +232,7 @@ void ofApp::draw(){
                 reset();
             }
         }
+        feed_offset = 0;
         
     }
     if(state == 40) {

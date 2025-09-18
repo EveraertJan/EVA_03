@@ -58,7 +58,8 @@ void StateManager::setState(int newState) {
     if(newState == 40) {
         toSend.setHex(0x00FFFF); OSCManager::getInstance().sendColor(toSend);
     }
-    if(newState == 50) {        
+    if(newState == 50) { 
+        toSend.setHex(0xFFFFFF); OSCManager::getInstance().sendColor(toSend);       
         OSCManager::getInstance().sendCoin();
     }
 }
@@ -133,7 +134,7 @@ void StateManager::setNumFaces(int num_faces) {
         }
         if(no_person > ofGetFrameRate() * 10) {
             currentPerson = floor(ofRandom(1000000));
-            ofLog() << "reset person";
+            ofLog() << "reset person after time";
             setState(10);
         }
         no_person = -1;

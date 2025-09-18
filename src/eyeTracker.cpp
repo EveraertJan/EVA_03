@@ -62,6 +62,7 @@ void eyeTracker::setup(){
     
     faceTracker->setup(fsettings);
 #ifdef __linux__
+    std::cout << "LOADED linux " << endl;
  classifier.load("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
     trainingDone = true;
  #endif
@@ -264,7 +265,7 @@ void eyeTracker::build(){
 
 void eyeTracker::loadTrainingData() {
 
-    ofHttpResponse training_data_response = ofLoadURL("http://192.168.8.195:8090/api/collections/training_data/records");
+    ofHttpResponse training_data_response = ofLoadURL("http://127.0.0.1:8090/api/collections/training_data/records");
     
     
     try {

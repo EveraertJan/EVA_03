@@ -314,7 +314,7 @@ void ofApp::draw(){
             stringstream ss;
             ss << std::endl << "The system detected signs of lowered empathy, in the form of:" << " // // ";
             ss << std::endl << StateManager::getInstance().reason << " // // ";
-            ss << std::endl << "You have received 10 cents in exchange for a fraction of your empathy. This transaction is final. Your behavioral data is now displayed. Please take a moment to review and reflect."  << " //";
+            ss << std::endl << "You have received 10 cents in exchange for a fraction of your empathy. This transaction is final. Your behavioral data is now recorded and will aid in advancing the machine. // Please take a moment to review and reflect."  << " //";
 
             ack_complete.draw("SESSION", "COMPLETE", ss.str(), "Restart", "", false);
             if(ack_complete.accepted == 1) {

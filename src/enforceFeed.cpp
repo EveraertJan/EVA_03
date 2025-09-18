@@ -46,7 +46,7 @@ void enforceFeed::reset() {
 
 void enforceFeed::update(int feed_offset) {
       
-    int cutoff =  -(posts.size() * ((ofGetWidth() / 100) * 30) )/2;
+    int cutoff =  -(posts.size() * ((ofGetWidth() / 100) * 20) )/2;
     
     if(feed_offset <  cutoff) {
         amount_of_refreshes += 1;

@@ -91,7 +91,8 @@ void ofApp::update(){
     if( StateManager::getInstance().getState() == 20){
         
         Feed.update(feed_offset);
-        if(Feed.amount_of_refreshes >= 1 || Feed.time_running > ofGetFrameRate() * 30 || abs(feed_offset) > 20000) {
+        //Feed.amount_of_refreshes >= 1 ||
+        if(Feed.time_running > ofGetFrameRate() * 20 || abs(feed_offset) > 20000) {
             float c = 0;
             for(int i = 0; i < StateManager::getInstance().topics.size(); i++) {
                 
@@ -102,9 +103,21 @@ void ofApp::update(){
                 }
             }
             
+            
             int deduced = StateManager::getInstance().getDeduced();
+            if(abs(feed_offset) > 40000 && deduced == -1 ) {
+                deduced = floor(ofRandom(StateManager::getInstance().topics.size()));
+                StateManager::getInstance().setDeduced(deduced);
+                StateManager::getInstance().certainty = ofRandom(30);
+                c = StateManager::getInstance().certainty / 100;
+
+
+                
+            }
+            
             int cer =StateManager::getInstance().certainty;
             std::cout << ofToString(deduced) << " deduced with " << cer <<  endl;
+            
             
             if(deduced != -1) {
                 StateManager::getInstance().setState(30);

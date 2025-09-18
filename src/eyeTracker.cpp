@@ -266,7 +266,7 @@ void eyeTracker::build(){
     trainingDone = true;
     
     // classifier.save("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
-    classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
+    classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/EVA_02/bin/test_facetrack_model.dat");
     std::cout << "DONE" << endl;
 }
 

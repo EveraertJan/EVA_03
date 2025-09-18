@@ -8,11 +8,11 @@ int main( ){
 	ofGLWindowSettings settings;
 	settings.setSize(1200, 1920);
     
-#ifdef __APPLE__
-	settings.windowMode = OF_WINDOW; //can also be OF_FULLSCREEN
-#elif __LINUX
-    settings.windowMode = OF_FULLSCREEN; //can also be OF_FULLSCREEN
-#endif
+// #ifdef __APPLE__
+// 	settings.windowMode = OF_WINDOW; 
+// #elif __LINUX
+    settings.windowMode = OF_FULLSCREEN;
+// #endif
     
     auto window = ofCreateWindow(settings);
     

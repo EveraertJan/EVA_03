@@ -25,6 +25,7 @@ void enforceFeed::setup() {
     int cur_stack = StateManager::getInstance().getDeduced();
     
     
+    reset();
     
     for(int i = 0; i < 200; i++) {
         posts.push_back(
@@ -34,7 +35,6 @@ void enforceFeed::setup() {
                         );
     }
     ofRandomize(posts);
-    reset();
 }
 
 void enforceFeed::reset() {

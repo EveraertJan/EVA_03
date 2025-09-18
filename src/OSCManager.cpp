@@ -14,7 +14,7 @@ OSCManager& OSCManager::getInstance() {
 
 void OSCManager::setup() {
 
-    sender.setup("192.168.8.228", 9000);
+    sender.setup("192.168.8.227", 9000);
     ofLog() << "setting up the OSC";
     test();
 }

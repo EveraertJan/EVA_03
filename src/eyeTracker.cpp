@@ -234,6 +234,7 @@ void eyeTracker::calibrate(){
 }
 void eyeTracker::build(){
     std::cout << calibrationPoints.size() << " points to train" << endl;
+
     for(int i = 0; i < calibrationPoints.size(); i++) {
         std::vector<double> t;
         t.push_back(calibrationPoints.at(i).rpos.x / ofGetHeight());
@@ -249,24 +250,20 @@ void eyeTracker::build(){
         unsigned long label = calibrationPoints.at(i).pointIndex;
         classifier.addSample(t, label);
     }
-    ofLog() << "LINUX SETTINGS";
+
+    std::cout << "LINUX SETTINGS" << endl;
     classifier.train();
     trainingDone = true;
     
-    // /home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03
+    // classifier.save("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
+    classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
 
-// #ifdef __APPLE__
-//     classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
-// #elif __linux__
-    classifier.save("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
-
-// #endif
 }
 
 
 void eyeTracker::loadTrainingData() {
 
-    ofHttpResponse training_data_response = ofLoadURL("http://127.0.0.1:8090/api/collections/training_data/records");
+    ofHttpResponse training_data_response = ofLoadURL("http://192.168.8.195:8090/api/collections/training_data/records");
     
     
     try {

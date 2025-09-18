@@ -287,7 +287,7 @@ void ofApp::draw(){
         
         if( StateManager::getInstance().looking_away > 40) {
             StateManager::getInstance().reason = "No longer looking at the display";
-            StateManager::getInstance().setEmpathy(-0.003);
+            StateManager::getInstance().setEmpathy(-0.03);
         }
 //        if(StateManager::getInstance().click_through >= 10) {
 //            StateManager::getInstance().reason = "boredom, rapid scrolling";

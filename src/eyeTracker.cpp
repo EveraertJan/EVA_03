@@ -68,8 +68,11 @@ void eyeTracker::setup(){
  #endif
     
  #ifdef __APPLE__
+    
  classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
      trainingDone = true;
+    
+    
         loadTrainingData();
         build();
  #endif
@@ -265,7 +268,7 @@ void eyeTracker::build(){
 
 void eyeTracker::loadTrainingData() {
 
-    ofHttpResponse training_data_response = ofLoadURL("http://127.0.0.1:8090/api/collections/training_data/records");
+    ofHttpResponse training_data_response = ofLoadURL("http://192.168.8.195:8090/api/collections/training_data/records");
     
     
     try {

@@ -41,13 +41,7 @@ void enforceFeed::reset() {
     
     time_running = 0;
     amount_of_refreshes = 0;
-    
-    for(post& p : posts) {
-        p.clicked = false;
-        p.time_watched = 0;
-        p.focus_time = 0;
-        p.focused = 0;
-    }
+    posts.clear();
 }
 
 void enforceFeed::update(int feed_offset) {

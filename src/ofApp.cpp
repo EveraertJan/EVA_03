@@ -4,6 +4,8 @@
 #include "styleManager.hpp"
 //--------------------------------------------------------------
 void ofApp::setup(){
+        ofSetVerticalSync(true);
+
     EyeTracker.setup();
     
     
@@ -18,7 +20,6 @@ void ofApp::setup(){
     Comments.setup();
     
     ofDisableArbTex();
-    ofSetVerticalSync(true);
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
 
@@ -90,7 +91,7 @@ void ofApp::update(){
     if( StateManager::getInstance().getState() == 20){
         
         Feed.update(feed_offset);
-        if(Feed.amount_of_refreshes >= 2 || Feed.time_running > ofGetFrameRate() * 30) {
+        if(Feed.amount_of_refreshes >= 1 || Feed.time_running > ofGetFrameRate() * 30) {
             float c = 0;
             for(int i = 0; i < StateManager::getInstance().topics.size(); i++) {
                 
@@ -302,7 +303,7 @@ void ofApp::draw(){
     }
     if(state == 50) {
         
-        if(StateManager::getInstance().state_running > 40) {
+        if(StateManager::getInstance().state_running > 20) {
             drawState("REWARD");
             
             stringstream ss;

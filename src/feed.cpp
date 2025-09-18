@@ -33,7 +33,7 @@ void feed::setup() {
         if(i == 21) { cur_stack = 3; } // clim
         if(i == 28) { cur_stack = 4; } // soci
         if(i == 35) { cur_stack = 5; } // none
-        
+        ofLog()<<cur_stack;
         
         posts.push_back(
                         stack.at(cur_stack).at(

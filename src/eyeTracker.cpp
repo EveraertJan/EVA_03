@@ -43,13 +43,8 @@ void eyeTracker::setup(){
     calibPoints.push_back(ofVec2f(ofGetWidth() * .75, ofGetHeight() * .8));
 
     mGrabber.setDeviceID(0);
-#ifdef __APPLE__
-    mGrabber.setup(1280, 720);
-#elif __linux__
-    ofLog() << "LINUX SETTINGS";
     mGrabber.setup(1024, 768);
 
-#endif
 
     
     auto runMode = ofx::MediaPipe::Tracker::MODE_VIDEO;
@@ -67,15 +62,14 @@ void eyeTracker::setup(){
     
     faceTracker->setup(fsettings);
     
-#ifdef __linux__
     classifier.load("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
     trainingDone = true;
-#endif
+// #endif
     
-#ifdef __APPLE__
-    classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
-    trainingDone = true;
-#endif
+// #ifdef __APPLE__
+//     classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
+//     trainingDone = true;
+// #endif
   
     
     loadTrainingData();
@@ -255,6 +249,7 @@ void eyeTracker::build(){
         unsigned long label = calibrationPoints.at(i).pointIndex;
         classifier.addSample(t, label);
     }
+    ofLog() << "LINUX SETTINGS";
     classifier.train();
     trainingDone = true;
     
@@ -263,7 +258,6 @@ void eyeTracker::build(){
 // #ifdef __APPLE__
 //     classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
 // #elif __linux__
-    ofLog() << "LINUX SETTINGS";
     classifier.save("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
 
 // #endif

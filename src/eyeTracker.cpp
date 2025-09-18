@@ -103,6 +103,7 @@ void eyeTracker::update(){
         vector<std::shared_ptr<ofx::MediaPipe::Face>> faces = faceTracker->getFaces();
         if(faceTracker->getFaces().size() > 0) {
             face = faces[0];
+            StateManager::getInstance().setNoPerson(-1);
             
             ofVec3f rpos = face->mVertices[face->getIrisCenterIndex(true)];
             ofVec3f lpos = face->mVertices[face->getIrisCenterIndex(false)];
@@ -147,6 +148,9 @@ void eyeTracker::update(){
                     StateManager::getInstance().looking_away = 0;
                 }
             }
+        } else {
+//        StateManager::getInstance().setNoPerson(1);
+
         }
         StateManager::getInstance().setNumFaces( faceTracker->getFaces().size()  );
 

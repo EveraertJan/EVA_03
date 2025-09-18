@@ -122,7 +122,6 @@ void ofApp::update(){
     
     
     if(StateManager::getInstance().resetNecessary) {
-        StateManager::getInstance().resetNecessary = false;
         reset();
     }
     
@@ -286,19 +285,21 @@ void ofApp::draw(){
         ofDrawBitmapStringHighlight("distraction: " +ofToString(StateManager::getInstance().looking_away), ofVec2f(ofGetWidth()-140, ofGetHeight()-50));
   
         
-        if( StateManager::getInstance().looking_away > 200) {
+        if( StateManager::getInstance().looking_away > 40) {
             StateManager::getInstance().reason = "No longer looking at the display";
             StateManager::getInstance().setEmpathy(-0.003);
         }
-        if(StateManager::getInstance().click_through >= 10) {
-            StateManager::getInstance().reason = "boredom, rapid scrolling";
-            ofLog() << "rapid scrolling";
-            StateManager::getInstance().setEmpathy(-1);
-            StateManager::getInstance().setState(50);
-            
-        }
+//        if(StateManager::getInstance().click_through >= 10) {
+//            StateManager::getInstance().reason = "boredom, rapid scrolling";
+//            ofLog() << "rapid scrolling";
+//            StateManager::getInstance().setEmpathy(-1);
+//            
+//        }
+        
         if( StateManager::getInstance().getEmpathy() < 0.2) {
-            if(StateManager::getInstance().looking_away > 200) {
+            StateManager::getInstance().reason = "boredom, rapid scrolling";
+            
+            if(StateManager::getInstance().looking_away > 80) {
                 StateManager::getInstance().reason = "Distraction, ignoring subject";
             }
             ofLog() << "look elsewhere";
@@ -404,6 +405,7 @@ void ofApp::mouseReleased(int x, int y, int button){
     int tDiff = ofGetUnixTimeMillis() - lastUp;
     if( tDiff < 500) {
         StateManager::getInstance().click_through +=1;
+        StateManager::getInstance().setEmpathy(-.1);
     }
     lastUp = ofGetUnixTimeMillis();
 }

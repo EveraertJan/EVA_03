@@ -22,7 +22,7 @@ void StateManager::setup() {
     topics.push_back({"9w14v34597n24rw", "none", 0, 0});
 }
 void StateManager::reset() {
-    
+    resetNecessary = false;
     setState(0);
     setEmpathy(1);
     setDeduced(-1);
@@ -59,8 +59,9 @@ void StateManager::setState(int newState) {
         toSend.setHex(0x00FFFF); OSCManager::getInstance().sendColor(toSend);
     }
     if(newState == 50) { 
-        toSend.setHex(0xFFFFFF); OSCManager::getInstance().sendColor(toSend);       
         OSCManager::getInstance().sendCoin();
+        
+        toSend.setHex(0xFFFFFF); OSCManager::getInstance().sendColor(toSend);
     }
 }
 
@@ -110,6 +111,8 @@ void StateManager::setNoPerson(int newNoPerson) {
             resetNecessary = true;
             ofLog() << "no person for more than 30";
             currentState = 0;
+            setState(0);
+            resetNecessary = true;
             no_person = -1;
         }
         
@@ -122,7 +125,7 @@ int StateManager::getNoPerson() const {
 void StateManager::setNumFaces(int num_faces) {
     if(num_faces == 0) {
         no_person++;
-        if(no_person  > ofGetFrameRate() * 30 && currentState > 0) {
+        if(no_person  > ofGetFrameRate() * 30 && currentState != 0) {
             resetNecessary = true;
             setState(00);
         }

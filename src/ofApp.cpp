@@ -91,7 +91,7 @@ void ofApp::update(){
     if( StateManager::getInstance().getState() == 20){
         
         Feed.update(feed_offset);
-        if(Feed.amount_of_refreshes >= 1 || Feed.time_running > ofGetFrameRate() * 30 || abs(feed_offset) > 50000) {
+        if(Feed.amount_of_refreshes >= 1 || Feed.time_running > ofGetFrameRate() * 30 || abs(feed_offset) > 20000) {
             float c = 0;
             for(int i = 0; i < StateManager::getInstance().topics.size(); i++) {
                 

@@ -61,19 +61,19 @@ void eyeTracker::setup(){
     fsettings.outputFaceBlendshapes = true;
     
     faceTracker->setup(fsettings);
-    
-    classifier.load("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
+#ifdef __linux__
+ classifier.load("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
     trainingDone = true;
-// #endif
+ #endif
     
-// #ifdef __APPLE__
-//     classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
-//     trainingDone = true;
-// #endif
+ #ifdef __APPLE__
+ classifier.load("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
+     trainingDone = true;
+        loadTrainingData();
+        build();
+ #endif
   
     
-    loadTrainingData();
-    build();
     
     
 }
@@ -258,7 +258,7 @@ void eyeTracker::build(){
     
     // classifier.save("/home/eva/Documents/of_v0.12.1_linux64_gcc6_release/apps/myApps/EVA_03/bin/test_facetrack_model.dat");
     classifier.save("/Users/janeveraert/Documents/openframeworks/apps/myApps/eyetrack_test/bin/test_facetrack_model.dat");
-
+    std::cout << "DONE" << endl;
 }
 
 
